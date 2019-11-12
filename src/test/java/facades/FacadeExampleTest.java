@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
+import java.util.function.Supplier;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
