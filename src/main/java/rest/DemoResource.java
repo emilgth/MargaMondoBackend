@@ -1,6 +1,9 @@
 package rest;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entities.User;
+import facades.ScraperFacade;
 import utils.EMF_Creator;
 
 import javax.annotation.security.RolesAllowed;
@@ -14,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author lam@cphbusiness.dk
@@ -22,6 +26,8 @@ import java.util.List;
 public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+    private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
 
     @Context
     private UriInfo context;
@@ -66,5 +72,14 @@ public class DemoResource {
     public String getFromAdmin() {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("luke")
+    @RolesAllowed("user")
+    public String getLuke() throws ExecutionException, InterruptedException {
+        ScraperFacade scraperFacade = new ScraperFacade();
+        return GSON.toJson(scraperFacade.runParralel());
     }
 }
