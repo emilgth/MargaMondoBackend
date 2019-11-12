@@ -1,5 +1,7 @@
 package entities;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,15 +44,13 @@ public class User implements Serializable {
     public User() {
     }
 
-    //TODO Change when password is hashed
     public boolean verifyPassword(String pw) {
-        return (pw.equals(userPass));
+        return BCrypt.checkpw(pw, userPass);
     }
 
     public User(String userName, String userPass) {
         this.userName = userName;
-
-        this.userPass = userPass;
+        this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
     }
 
 
@@ -67,7 +67,7 @@ public class User implements Serializable {
     }
 
     public void setUserPass(String userPass) {
-        this.userPass = userPass;
+        this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
     }
 
     public List<Role> getRoleList() {
