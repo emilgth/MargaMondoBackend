@@ -12,6 +12,10 @@ public class ScraperFacade {
         ExecutorService executorService = Executors.newCachedThreadPool();
         List<String> urls = new ArrayList<>();
         urls.add("https://swapi.co/api/people/1/");
+        urls.add("http://api.icndb.com/jokes/random/");
+        urls.add("https://sv443.net/jokeapi/category/Any");
+        urls.add("https://pokeapi.co/api/v2/pokemon/ditto/");
+        urls.add("https://restcountries.eu/rest/v2/name/denmark");
         List<Future<GetApi>> futures = new ArrayList<>();
         for (String url : urls) {
             Callable<GetApi> getApiCallable = new GetApiCallable(url);

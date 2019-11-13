@@ -12,12 +12,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lam@cphbusiness.dk
@@ -78,8 +78,16 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("luke")
     @RolesAllowed("user")
-    public String getLuke() throws ExecutionException, InterruptedException {
-        ScraperFacade scraperFacade = new ScraperFacade();
-        return GSON.toJson(scraperFacade.runParralel());
+    public void getLuke(@Suspended final AsyncResponse ar) throws ExecutionException, InterruptedException {
+        ar.setTimeoutHandler(asyncResponse -> asyncResponse.resume(Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("You fucked up").build()));
+        ar.setTimeout(5, TimeUnit.SECONDS);
+        new Thread(() -> {
+            ScraperFacade scraperFacade = new ScraperFacade();
+            try {
+                ar.resume(GSON.toJson(scraperFacade.runParralel()));
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
