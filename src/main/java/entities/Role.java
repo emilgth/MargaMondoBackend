@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Plaul
@@ -45,5 +46,17 @@ public class Role implements Serializable {
         this.userList = userList;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return roleName.equals(role.roleName) &&
+                userList.equals(role.userList);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(roleName, userList);
+    }
 }

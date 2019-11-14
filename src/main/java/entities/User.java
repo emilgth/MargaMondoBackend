@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -82,4 +83,18 @@ public class User implements Serializable {
         roleList.add(userRole);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return userName.equals(user.userName) &&
+                userPass.equals(user.userPass) &&
+                roleList.equals(user.roleList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, userPass, roleList);
+    }
 }

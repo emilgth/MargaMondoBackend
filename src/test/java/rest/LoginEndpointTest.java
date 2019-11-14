@@ -1,27 +1,33 @@
 package rest;
 
 import entities.RenameMe;
-import entities.Role;
 import entities.User;
+import entities.Role;
+
 import io.restassured.RestAssured;
+
+import static io.restassured.RestAssured.given;
+
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import utils.EMF_Creator;
 
+import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
 
-import static io.restassured.RestAssured.given;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
+
 import static org.hamcrest.Matchers.equalTo;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import utils.EMF_Creator;
 
 //@Disabled
 public class LoginEndpointTest {
@@ -153,7 +159,7 @@ public class LoginEndpointTest {
     }
 
     @Test
-    public void testAutorizedUserCannotAccesAdminPage() {
+    public void testAuthorizedUserCannotAccessAdminPage() {
         login("user", "test");
         given()
                 .contentType("application/json")
@@ -164,7 +170,7 @@ public class LoginEndpointTest {
     }
 
     @Test
-    public void testAutorizedAdminCannotAccesUserPage() {
+    public void testAuthorizedAdminCannotAccessUserPage() {
         login("admin", "test");
         given()
                 .contentType("application/json")
@@ -222,6 +228,4 @@ public class LoginEndpointTest {
                 .body("code", equalTo(403))
                 .body("message", equalTo("Not authenticated - do login"));
     }
-
-
 }
