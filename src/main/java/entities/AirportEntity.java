@@ -11,20 +11,30 @@ public class AirportEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String AirportName;
+    private String airportName;
+    private String airportCode;
 
     public AirportEntity() {
     }
 
-    public AirportEntity(String airportName) {
-        AirportName = airportName;
+    public AirportEntity(String airportName, String airportCode) {
+        this.airportName = airportName;
+        this.airportCode = airportCode;
     }
 
     public String getAirportName() {
-        return AirportName;
+        return airportName;
     }
 
     public void setAirportName(String airportName) {
-        AirportName = airportName;
+        airportName = airportName;
+    }
+
+    public String getAirportCode() {
+        return airportCode;
+    }
+
+    public void setAirportCode(String airportCode) {
+        this.airportCode = airportCode;
     }
 }
