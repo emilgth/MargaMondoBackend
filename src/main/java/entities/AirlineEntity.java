@@ -2,7 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+//karl check
 @Entity
 @NamedQuery(name = "AirlineEntity.deleteAllRows", query = "DELETE from AirlineEntity ")
 public class AirlineEntity implements Serializable {
