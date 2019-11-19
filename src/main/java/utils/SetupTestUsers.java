@@ -27,16 +27,16 @@ public class SetupTestUsers {
         AirlineEntity airlineEntity = new AirlineEntity("SAS");
 
         FlightEntity flightEntity = new FlightEntity();
-        flightEntity.setAircraftType("Airbus 230");
+//        flightEntity.setAircraftType("Airbus 230");
         flightEntity.setAirline(airlineEntity);
         flightEntity.setArrivalLocation(airportEntity1);
         flightEntity.setDepartureLocation(airportEntity);
         long deptime = 1575154800000L;
         flightEntity.setDepartureTime(new Date(deptime));
         long arrTime = 1575154800000L + 10000000L;
-        flightEntity.setArrivalTime(new Date(arrTime));
-        flightEntity.setFlightDuration(flightEntity.getArrivalTime().getTime() - flightEntity.getDepartureTime().getTime());
-        flightEntity.setFlightNumber("AB1234");
+//        flightEntity.setArrivalTime(new Date(arrTime));
+//        flightEntity.setFlightDuration(flightEntity.getArrivalTime().getTime() - flightEntity.getDepartureTime().getTime());
+//        flightEntity.setFlightNumber("AB1234");
         flightEntity.setPrice(1500);
         try {
             em.getTransaction().begin();

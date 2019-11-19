@@ -82,9 +82,9 @@ class FlightResourceTest {
         flight2.setAirline(airlineEntity2);
         flight3.setAirline(airlineEntity3);
 
-        flight1.setAircraftType("Airbus 230");
-        flight2.setAircraftType("Boing 777");
-        flight3.setAircraftType("Airbus a330");
+//        flight1.setAircraftType("Airbus 230");
+//        flight2.setAircraftType("Boing 777");
+//        flight3.setAircraftType("Airbus a330");
 
         long depTime = 1575154800000L;
         long arrTime = depTime + 10000000L;
@@ -94,17 +94,17 @@ class FlightResourceTest {
         flight2.setDepartureTime(new Date(depTime + dayInMilliseconds));
         flight3.setDepartureTime(new Date(depTime + 2 * dayInMilliseconds));
 
-        flight1.setArrivalTime(new Date(arrTime));
-        flight2.setArrivalTime(new Date(arrTime + dayInMilliseconds));
-        flight3.setArrivalTime(new Date(arrTime + 2 * dayInMilliseconds));
+//        flight1.setArrivalTime(new Date(arrTime));
+//        flight2.setArrivalTime(new Date(arrTime + dayInMilliseconds));
+//        flight3.setArrivalTime(new Date(arrTime + 2 * dayInMilliseconds));
+//
+//        flight1.setFlightDuration(flight1.getArrivalTime().getTime() - flight1.getDepartureTime().getTime());
+//        flight2.setFlightDuration(flight2.getArrivalTime().getTime() - flight2.getDepartureTime().getTime());
+//        flight3.setFlightDuration(flight3.getArrivalTime().getTime() - flight3.getDepartureTime().getTime());
 
-        flight1.setFlightDuration(flight1.getArrivalTime().getTime() - flight1.getDepartureTime().getTime());
-        flight2.setFlightDuration(flight2.getArrivalTime().getTime() - flight2.getDepartureTime().getTime());
-        flight3.setFlightDuration(flight3.getArrivalTime().getTime() - flight3.getDepartureTime().getTime());
-
-        flight1.setFlightNumber("AB1234");
-        flight2.setFlightNumber("XY9876");
-        flight3.setFlightNumber("QW4567");
+//        flight1.setFlightNumber("AB1234");
+//        flight2.setFlightNumber("XY9876");
+//        flight3.setFlightNumber("QW4567");
 
         flight1.setPrice(252.40);
         flight2.setPrice(319.99);

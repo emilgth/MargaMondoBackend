@@ -5,13 +5,17 @@ import java.io.Serializable;
 
 @Entity
 @NamedQuery(name = "AirportEntity.deleteAllRows", query = "DELETE from AirportEntity ")
+@Table(name = "airportentity")
 public class AirportEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "airportname")
     private String airportName;
+    @Column(name = "airportcode")
     private String airportCode;
 
     public AirportEntity() {

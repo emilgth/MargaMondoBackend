@@ -13,26 +13,34 @@ import java.util.Date;
         @NamedQuery(name = "FlightEntity.getAllRows", query = "SELECT Flight FROM FlightEntity Flight"),
         @NamedQuery(name = "FlightEntity.deleteAllRows", query = "DELETE FROM FlightEntity")
 })
+@Table(name = "flightentity")
 public class FlightEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "departurelocation_id")
     private AirportEntity departureLocation;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "arrivallocation_id")
     private AirportEntity arrivalLocation;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date arrivalTime;
+    @Column(name = "departuretime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date departureTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date arrivalTime;
+    @Column(name = "flightduration")
     private long flightDuration;
+    @Column(name = "price")
     private double price;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "airline_id")
     private AirlineEntity airline;
-    private String flightNumber;
-    private String aircraftType;
+//    private String flightNumber;
+//    private String aircraftType;
 
     public FlightEntity() {
     }
@@ -61,13 +69,13 @@ public class FlightEntity implements Serializable {
         this.departureTime = departureTime;
     }
 
-    public Date getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(Date arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
+//    public Date getArrivalTime() {
+//        return arrivalTime;
+//    }
+//
+//    public void setArrivalTime(Date arrivalTime) {
+//        this.arrivalTime = arrivalTime;
+//    }
 
     public long getFlightDuration() {
         return flightDuration;
@@ -93,21 +101,21 @@ public class FlightEntity implements Serializable {
         this.airline = airline;
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
-    }
-
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
-    }
-
-    public String getAircraftType() {
-        return aircraftType;
-    }
-
-    public void setAircraftType(String aircraftType) {
-        this.aircraftType = aircraftType;
-    }
+//    public String getFlightNumber() {
+//        return flightNumber;
+//    }
+//
+//    public void setFlightNumber(String flightNumber) {
+//        this.flightNumber = flightNumber;
+//    }
+//
+//    public String getAircraftType() {
+//        return aircraftType;
+//    }
+//
+//    public void setAircraftType(String aircraftType) {
+//        this.aircraftType = aircraftType;
+//    }
 
     public Long getId() {
         return id;

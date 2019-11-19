@@ -23,15 +23,15 @@ public class FlightDTO {
 
     public FlightDTO(FlightEntity flightEntity) {
         this.departureTime = flightEntity.getDepartureTime();
-        this.arrivalTime = flightEntity.getArrivalTime();
+//        this.arrivalTime = flightEntity.getArrivalTime();
         this.flightDuration = flightEntity.getFlightDuration();
         this.departureAirportName = flightEntity.getDepartureLocation().getAirportName();
         this.departureAirportCode = flightEntity.getDepartureLocation().getAirportCode();
         this.arrivalAirportName = flightEntity.getArrivalLocation().getAirportName();
         this.arrivalAirportCode = flightEntity.getArrivalLocation().getAirportCode();
         this.airline = flightEntity.getAirline().getAirlineName();
-        this.flightNumber = flightEntity.getFlightNumber();
-        this.aircraftType = flightEntity.getAircraftType();
+//        this.flightNumber = flightEntity.getFlightNumber();
+//        this.aircraftType = flightEntity.getAircraftType();
         this.price = flightEntity.getPrice();
     }
 
