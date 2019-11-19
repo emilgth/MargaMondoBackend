@@ -9,7 +9,10 @@ import java.util.Date;
 
 
 @Entity
-@NamedQuery(name = "FlightEntity.deleteAllRows", query = "DELETE from FlightEntity")
+@NamedQueries(value = {
+        @NamedQuery(name = "FlightEntity.getAllRows", query = "SELECT Flight FROM FlightEntity Flight"),
+        @NamedQuery(name = "FlightEntity.deleteAllRows", query = "DELETE FROM FlightEntity")
+})
 public class FlightEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
