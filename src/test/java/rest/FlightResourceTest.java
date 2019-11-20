@@ -18,6 +18,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -174,8 +176,8 @@ class FlightResourceTest {
     }
 
     @Test
-    void flightSearch() {
-        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new Date("2019-12-01"));
+    void flightSearch() throws ParseException {
+        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new SimpleDateFormat("YYYY-MM-dd" ).parse("2019-12-01"));
         given()
                 .body(flightSearchDTO)
                 .contentType("application/json")

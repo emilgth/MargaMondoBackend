@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class FlightSearchDTO {
     private String destination;
-    private String arrival;
+    private String departure;
     private Date dateTime;
 
-    public FlightSearchDTO(String destination, String arrival, Date dateTime) {
+    public FlightSearchDTO(String destination, String departure, Date dateTime) {
         this.destination = destination;
-        this.arrival = arrival;
+        this.departure = departure;
         this.dateTime = dateTime;
     }
 
@@ -21,12 +21,12 @@ public class FlightSearchDTO {
         this.destination = destination;
     }
 
-    public String getArrival() {
-        return arrival;
+    public String getDeparture() {
+        return departure;
     }
 
-    public void setArrival(String arrival) {
-        this.arrival = arrival;
+    public void setDeparture(String departure) {
+        this.departure = departure;
     }
 
     public Date getDateTime() {

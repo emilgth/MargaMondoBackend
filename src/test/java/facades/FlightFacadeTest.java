@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
@@ -145,7 +144,7 @@ class FlightFacadeTest {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-01");
         FlightSearchDTO fs = new FlightSearchDTO("Paris", "Copenhagen", date);
         System.out.println(fs.getDateTime());
-        List<FlightDTO> flights = flightFacade.flightSearch(fs.getDestination(), fs.getArrival(),  fs.getDateTime());
+        List<FlightDTO> flights = flightFacade.flightSearch(fs.getDestination(), fs.getDeparture(),  fs.getDateTime());
         assertEquals(1, flights.size());
     }
 }

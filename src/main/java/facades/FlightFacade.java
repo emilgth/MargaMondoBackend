@@ -51,7 +51,7 @@ public class FlightFacade implements IFlightFacade {
                     .setParameter("dep", dep)
                     .setParameter("arr", dest)
                     .setParameter("date", date)
-                    .setParameter("nextDay", nextDay)
+                    .setParameter("nextDay", nextDay) // sets the next day, so all the flights of the current day return
                     .getResultList();
             flightEntities.forEach(f -> flightDTOS.add(new FlightDTO(f)));
             return flightDTOS;

@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import dtos.FlightDTO;
 import dtos.FlightSearchDTO;
 import facades.FlightFacade;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
@@ -41,9 +40,10 @@ public class FlightResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String flightSearch(FlightSearchDTO flightSearchDTO) {
+    public String flightSearch(String flightSearch) {
+        FlightSearchDTO flightSearchDTO = GSON.fromJson(flightSearch, FlightSearchDTO.class);
         String dest = flightSearchDTO.getDestination();
-        String dep = flightSearchDTO.getArrival();
+        String dep = flightSearchDTO.getDeparture();
         Date date = flightSearchDTO.getDateTime();
         return GSON.toJson(FLIGHT_FACADE.flightSearch(dest, dep, date));
     }
