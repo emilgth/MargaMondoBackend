@@ -136,4 +136,10 @@ class FlightFacadeTest {
         assertThat(flights, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
         assertEquals(3, flights.size());
     }
+
+    @Test
+    void flightSearch() {
+//        new Da
+//        List<FlightDTO> flights = flightFacade.flightSearch("Paris", "Copenhagen", Date("2019-12-01"));
+    }
 }
