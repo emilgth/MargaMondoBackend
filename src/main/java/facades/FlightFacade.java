@@ -6,6 +6,7 @@ import entities.FlightEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FlightFacade implements IFlightFacade {
@@ -39,5 +40,9 @@ public class FlightFacade implements IFlightFacade {
         } finally {
             em.close();
         }
+    }
+
+    public String flightSearch(String dest, String dep, Date date) {
+        return null;
     }
 }

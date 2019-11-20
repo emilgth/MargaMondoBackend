@@ -1,6 +1,7 @@
 package entities;
 
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import org.eclipse.persistence.tools.schemaframework.ForeignKeyConstraint;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -42,6 +43,7 @@ public class FlightEntity implements Serializable {
 //    private String flightNumber;
 //    private String aircraftType;
 
+
     public FlightEntity() {
     }
 
@@ -52,6 +54,7 @@ public class FlightEntity implements Serializable {
     public void setDepartureLocation(AirportEntity departureLocation) {
         this.departureLocation = departureLocation;
     }
+
 
     public AirportEntity getArrivalLocation() {
         return arrivalLocation;

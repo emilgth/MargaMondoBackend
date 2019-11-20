@@ -122,6 +122,8 @@ class FlightFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("FlightEntity.deleteAllRows");
+            em.createNamedQuery("AirlineEntity.deleteAllRows");
+            em.createNamedQuery("AirportEntity.deleteAllRows");
             em.getTransaction().commit();
         } finally {
             em.close();

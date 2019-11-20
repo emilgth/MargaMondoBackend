@@ -24,10 +24,9 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
+@Disabled
 class FlightResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -170,6 +169,26 @@ class FlightResourceTest {
                 .extract()
                 .body().jsonPath().getList("", FlightDTO.class);
 
+        assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
+    }
+
+    @Test
+    void flightSearch() {
+        given()
+                .body("{destination: \"Paris\", arrival: \"Copenhagen\", dateTime: \"2019-12-01\"}")
+                .contentType("application/json")
+                .get("flights/search").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("", hasSize(3));
+        List<FlightDTO> flightDTOS = given()
+                .body("{destination: \"Paris\", arrival: \"Copenhagen\", dateTime: \"2019-12-01\"}")
+                .contentType("application/json")
+                .get("flights/search").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .extract()
+                .body().jsonPath().getList("", FlightDTO.class);
         assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
     }
 }

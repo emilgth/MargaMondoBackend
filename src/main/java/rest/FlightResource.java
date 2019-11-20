@@ -3,15 +3,14 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.FlightDTO;
-import facades.FacadeExample;
 import facades.FlightFacade;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.List;
 
 @Path("flights")
@@ -35,6 +34,17 @@ public class FlightResource {
     public String getAllFlights() {
         List<FlightDTO> flights = FLIGHT_FACADE.getAllFlights();
         return GSON.toJson(flights);
+    }
+
+    @Path("search")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String flightSearch(String destination, String departure, Date dateTime) {
+        String dest = GSON.fromJson(destination, String.class);
+        String dep = GSON.fromJson(departure, String.class);
+        Date date = GSON.fromJson(String.valueOf(dateTime), Date.class);
+        return FLIGHT_FACADE.flightSearch(dest, dep, date);
     }
 
 }
