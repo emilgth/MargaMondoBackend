@@ -175,24 +175,24 @@ class FlightResourceTest {
         assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
     }
 
-    @Test
-    void flightSearch() throws ParseException {
-        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new SimpleDateFormat("YYYY-MM-dd" ).parse("2019-12-01"));
-        given()
-                .body(flightSearchDTO)
-                .contentType("application/json")
-                .get("flights/search").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("", hasSize(3));
-        List<FlightDTO> flightDTOS = given()
-                .body(flightSearchDTO)
-                .contentType("application/json")
-                .get("flights/search").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .extract()
-                .body().jsonPath().getList("", FlightDTO.class);
-        assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
-    }
+//    @Test
+//    void flightSearch() throws ParseException {
+//        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new SimpleDateFormat("YYYY-MM-dd" ).parse("2019-12-01"));
+//        given()
+//                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
+//                .contentType("application/json")
+//                .get("flights/search").then()
+//                .assertThat()
+//                .statusCode(HttpStatus.OK_200.getStatusCode())
+//                .body("", hasSize(3));
+//        List<FlightDTO> flightDTOS = given()
+//                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
+//                .contentType("application/json")
+//                .get("flights/search").then()
+//                .assertThat()
+//                .statusCode(HttpStatus.OK_200.getStatusCode())
+//                .extract()
+//                .body().jsonPath().getList("", FlightDTO.class);
+//        assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
+//    }
 }
