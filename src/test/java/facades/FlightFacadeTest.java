@@ -145,6 +145,6 @@ class FlightFacadeTest {
         FlightSearchDTO fs = new FlightSearchDTO("Paris", "Copenhagen", date);
         System.out.println(fs.getDateTime());
         List<FlightDTO> flights = flightFacade.flightSearch(fs.getDestination(), fs.getDeparture(),  fs.getDateTime());
-        assertEquals(1, flights.size());
+        assertEquals(2, flights.size());
     }
 }
