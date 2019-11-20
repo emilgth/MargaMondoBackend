@@ -1,11 +1,13 @@
 package dtos;
 
+import java.util.Date;
+
 public class FlightSearchDTO {
     private String destination;
     private String arrival;
-    private String dateTime;
+    private Date dateTime;
 
-    public FlightSearchDTO(String destination, String arrival, String dateTime) {
+    public FlightSearchDTO(String destination, String arrival, Date dateTime) {
         this.destination = destination;
         this.arrival = arrival;
         this.dateTime = dateTime;
@@ -27,11 +29,11 @@ public class FlightSearchDTO {
         this.arrival = arrival;
     }
 
-    public String getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 }

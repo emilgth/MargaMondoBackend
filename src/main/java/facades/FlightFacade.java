@@ -42,7 +42,21 @@ public class FlightFacade implements IFlightFacade {
         }
     }
 
-    public String flightSearch(String dest, String dep, Date date) {
-        return null;
+    public List<FlightDTO> flightSearch(String dest, String dep, Date date) {
+        EntityManager em = emf.createEntityManager();
+        Date nextDay = new Date(date.getTime() + 86400000);
+        try {
+            List<FlightDTO> flightDTOS = new ArrayList<>();
+            List<FlightEntity> flightEntities = em.createQuery("select f from FlightEntity f where f.departureLocation.airportName = :dep and  f.arrivalLocation.airportName = :arr and f.departureTime >= :date and f.departureTime < :nextDay", FlightEntity.class)
+                    .setParameter("dep", dep)
+                    .setParameter("arr", dest)
+                    .setParameter("date", date)
+                    .setParameter("nextDay", nextDay)
+                    .getResultList();
+            flightEntities.forEach(f -> flightDTOS.add(new FlightDTO(f)));
+            return flightDTOS;
+        } finally {
+            em.close();
+        }
     }
 }

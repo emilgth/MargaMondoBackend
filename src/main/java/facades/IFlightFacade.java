@@ -9,6 +9,6 @@ public interface IFlightFacade {
 
     List<FlightDTO> getAllFlights();
 
-    String flightSearch(String dest, String dep, Date date);
+    List<FlightDTO> flightSearch(String dest, String dep, Date date);
 
 }

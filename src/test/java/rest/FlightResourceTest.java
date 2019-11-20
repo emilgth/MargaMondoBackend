@@ -1,6 +1,7 @@
 package rest;
 
 import dtos.FlightDTO;
+import dtos.FlightSearchDTO;
 import entities.AirlineEntity;
 import entities.AirportEntity;
 import entities.FlightEntity;
@@ -174,15 +175,16 @@ class FlightResourceTest {
 
     @Test
     void flightSearch() {
+        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new Date("2019-12-01"));
         given()
-                .body("{destination: \"Paris\", arrival: \"Copenhagen\", dateTime: \"2019-12-01\"}")
+                .body(flightSearchDTO)
                 .contentType("application/json")
                 .get("flights/search").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("", hasSize(3));
         List<FlightDTO> flightDTOS = given()
-                .body("{destination: \"Paris\", arrival: \"Copenhagen\", dateTime: \"2019-12-01\"}")
+                .body(flightSearchDTO)
                 .contentType("application/json")
                 .get("flights/search").then()
                 .assertThat()

@@ -42,10 +42,10 @@ public class FlightResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String flightSearch(FlightSearchDTO flightSearchDTO) {
-        String dest = GSON.fromJson(flightSearchDTO.getDestination(), String.class);
-        String dep = GSON.fromJson(flightSearchDTO.getArrival(), String.class);
-        Date date = GSON.fromJson(flightSearchDTO.getDateTime(), Date.class);
-        return FLIGHT_FACADE.flightSearch(dest, dep, date);
+        String dest = flightSearchDTO.getDestination();
+        String dep = flightSearchDTO.getArrival();
+        Date date = flightSearchDTO.getDateTime();
+        return GSON.toJson(FLIGHT_FACADE.flightSearch(dest, dep, date));
     }
 
 }

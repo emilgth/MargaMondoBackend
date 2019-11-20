@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.FlightDTO;
+import dtos.FlightSearchDTO;
 import entities.AirlineEntity;
 import entities.AirportEntity;
 import entities.FlightEntity;
@@ -23,6 +24,8 @@ import org.junit.jupiter.api.Test;
 import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -138,8 +141,11 @@ class FlightFacadeTest {
     }
 
     @Test
-    void flightSearch() {
-//        new Da
-//        List<FlightDTO> flights = flightFacade.flightSearch("Paris", "Copenhagen", Date("2019-12-01"));
+    void flightSearch() throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-01");
+        FlightSearchDTO fs = new FlightSearchDTO("Paris", "Copenhagen", date);
+        System.out.println(fs.getDateTime());
+        List<FlightDTO> flights = flightFacade.flightSearch(fs.getDestination(), fs.getArrival(),  fs.getDateTime());
+        assertEquals(1, flights.size());
     }
 }
