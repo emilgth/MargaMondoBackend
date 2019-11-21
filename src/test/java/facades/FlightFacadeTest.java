@@ -102,10 +102,6 @@ class FlightFacadeTest {
         flight2.setPrice(319.99);
         flight3.setPrice(295.95);
 
-        flightDTO1 = new FlightDTO(flight1);
-        flightDTO2 = new FlightDTO(flight2);
-        flightDTO3 = new FlightDTO(flight3);
-
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -116,6 +112,10 @@ class FlightFacadeTest {
         } finally {
             em.close();
         }
+
+        flightDTO1 = new FlightDTO(flight1);
+        flightDTO2 = new FlightDTO(flight2);
+        flightDTO3 = new FlightDTO(flight3);
     }
 
     @AfterEach

@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 class FlightResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -112,10 +112,6 @@ class FlightResourceTest {
         flight2.setPrice(319.99);
         flight3.setPrice(295.95);
 
-        flightDTO1 = new FlightDTO(flight1);
-        flightDTO2 = new FlightDTO(flight2);
-        flightDTO3 = new FlightDTO(flight3);
-
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -126,6 +122,10 @@ class FlightResourceTest {
         } finally {
             em.close();
         }
+
+        flightDTO1 = new FlightDTO(flight1);
+        flightDTO2 = new FlightDTO(flight2);
+        flightDTO3 = new FlightDTO(flight3);
     }
 
     @AfterEach
@@ -175,24 +175,28 @@ class FlightResourceTest {
         assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
     }
 
-//    @Test
-//    void flightSearch() throws ParseException {
-//        FlightSearchDTO flightSearchDTO = new FlightSearchDTO("Paris", "Copenhagen", new SimpleDateFormat("YYYY-MM-dd" ).parse("2019-12-01"));
-//        given()
-//                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
-//                .contentType("application/json")
-//                .get("flights/search").then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode())
-//                .body("", hasSize(3));
-//        List<FlightDTO> flightDTOS = given()
-//                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
-//                .contentType("application/json")
-//                .get("flights/search").then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode())
-//                .extract()
-//                .body().jsonPath().getList("", FlightDTO.class);
-//        assertThat(flightDTOS, containsInAnyOrder(flightDTO1, flightDTO2, flightDTO3));
-//    }
+    @Test
+    void flightSearchSize() throws ParseException {
+        given()
+                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
+                .contentType("application/json")
+                .post("flights/search").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("", hasSize(1));
+    }
+
+    @Test
+    void flightSearchContent() {
+        List<FlightDTO> flightDTOS = given()
+                .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
+                .contentType("application/json")
+                .post("flights/search").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .extract()
+                .body().jsonPath().getList("", FlightDTO.class);
+
+        assertThat(flightDTOS, containsInAnyOrder(flightDTO2));
+    }
 }

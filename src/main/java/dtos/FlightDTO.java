@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class FlightDTO {
+    private long id;
     private Date departureTime;
     private Date arrivalTime;
     private long flightDuration;
@@ -22,6 +23,7 @@ public class FlightDTO {
     }
 
     public FlightDTO(FlightEntity flightEntity) {
+        this.id = flightEntity.getId();
         this.departureTime = flightEntity.getDepartureTime();
 //        this.arrivalTime = flightEntity.getArrivalTime();
         this.flightDuration = flightEntity.getFlightDuration();
@@ -40,7 +42,8 @@ public class FlightDTO {
         if (this == o) return true;
         if (!(o instanceof FlightDTO)) return false;
         FlightDTO flightDTO = (FlightDTO) o;
-        return flightDuration == flightDTO.flightDuration &&
+        return id == flightDTO.id &&
+                flightDuration == flightDTO.flightDuration &&
                 Double.compare(flightDTO.price, price) == 0 &&
                 Objects.equals(departureTime, flightDTO.departureTime) &&
                 Objects.equals(arrivalTime, flightDTO.arrivalTime) &&
@@ -55,13 +58,14 @@ public class FlightDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(departureTime, arrivalTime, flightDuration, departureAirportName, departureAirportCode, arrivalAirportName, arrivalAirportCode, airline, flightNumber, aircraftType, price);
+        return Objects.hash(id, departureTime, arrivalTime, flightDuration, departureAirportName, departureAirportCode, arrivalAirportName, arrivalAirportCode, airline, flightNumber, aircraftType, price);
     }
 
     @Override
     public String toString() {
         return "FlightDTO{" +
-                "departureTime=" + departureTime +
+                "id=" + id +
+                ", departureTime=" + departureTime +
                 ", arrivalTime=" + arrivalTime +
                 ", flightDuration=" + flightDuration +
                 ", departureAirportName='" + departureAirportName + '\'' +
@@ -73,6 +77,14 @@ public class FlightDTO {
                 ", aircraftType='" + aircraftType + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getDepartureTime() {

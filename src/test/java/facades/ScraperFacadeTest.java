@@ -25,11 +25,4 @@ class ScraperFacadeTest {
         emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.TEST, EMF_Creator.Strategy.DROP_AND_CREATE);
         scraperFacade = ScraperFacade.getScraperFacade(emf);
     }
-
-    @Test
-    void getAllApiDataInParallelWithQueue() throws ExecutionException, InterruptedException {
-        for (String json : scraperFacade.getAllApiData()) {
-            System.out.println(json);
-        }
-    }
 }
