@@ -74,20 +74,4 @@ public class DemoResource {
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("luke")
-    @RolesAllowed("user")
-    public void getLuke(@Suspended final AsyncResponse ar) throws ExecutionException, InterruptedException {
-        ar.setTimeoutHandler(asyncResponse -> asyncResponse.resume(Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("You fucked up").build()));
-        ar.setTimeout(10, TimeUnit.SECONDS);
-        new Thread(() -> {
-            ScraperFacade scraperFacade = new ScraperFacade();
-            try {
-                ar.resume(GSON.toJson(scraperFacade.runParralel()));
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
 }

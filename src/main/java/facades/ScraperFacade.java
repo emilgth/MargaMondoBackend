@@ -1,33 +1,81 @@
 package facades;
 
-import webScrapers.GetApi;
-import webScrapers.GetApiCallable;
-
+import javax.persistence.EntityManagerFactory;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class ScraperFacade {
-    public List<String> runParralel() throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        List<String> urls = new ArrayList<>();
-        urls.add("https://swapi.co/api/people/1/");
-        urls.add("http://api.icndb.com/jokes/random/");
-        urls.add("https://sv443.net/jokeapi/category/Any");
-        urls.add("https://pokeapi.co/api/v2/pokemon/ditto/");
+
+    private static EntityManagerFactory emf;
+    private static ScraperFacade instance;
+    private static List<String> urls;
+
+    private ScraperFacade() {
+    }
+
+    /**
+     * @param _emf
+     * @return the instance of this facade.
+     */
+    public static ScraperFacade getScraperFacade(EntityManagerFactory _emf) {
+        if (instance == null) {
+            emf = _emf;
+            getUrls();
+            instance = new ScraperFacade();
+        }
+        return instance;
+    }
+
+    private static void getUrls() {
+        urls = new ArrayList<>();
+        urls.add("https://emilgth.dk/margamondo/api/flights/all");
+        urls.add("https://emilgth.dk/margamondo/api/flights/all");
         urls.add("https://restcountries.eu/rest/v2/name/denmark");
-        List<Future<GetApi>> futures = new ArrayList<>();
+    }
+
+    public List<String> getAllApiData() throws ExecutionException, InterruptedException {
+        List<String> data = new ArrayList<>();
+        Queue<Future<String>> queue = new ArrayBlockingQueue<>(urls.size());
+
+        ExecutorService executor = Executors.newCachedThreadPool();
         for (String url : urls) {
-            Callable<GetApi> getApiCallable = new GetApiCallable(url);
-            Future<GetApi> future = executorService.submit(getApiCallable);
-            futures.add(future);
+            //The lambda notation makes the method an implicit callable
+            Future<String> future = executor.submit(() -> getApiData(url));
+            queue.add(future);
         }
-        List<String> apiData = new ArrayList<>();
-        for (Future<GetApi> future : futures) {
-            GetApi getApi = future.get();
-            apiData.add(getApi.getResult());
+        data.add("[");
+        while (!queue.isEmpty()) {
+            Future<String> json = queue.poll();
+            if (json.isDone()) {
+                data.add(json.get());
+                data.add(",");
+            } else {
+                queue.add(json);
+            }
         }
-        executorService.shutdown();
-        return apiData;
+        data.remove(data.size() - 1);
+        data.add("]");
+        executor.shutdown();
+        return data;
+    }
+
+    public String getApiData(String apiUrl) throws IOException {
+        URL url = new URL(apiUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+        try (Scanner scanner = new Scanner(connection.getInputStream())) {
+            StringBuilder jsonStr = new StringBuilder();
+            while (scanner.hasNext()) {
+                jsonStr.append(scanner.nextLine());
+            }
+            return jsonStr.toString();
+        }
     }
 }
