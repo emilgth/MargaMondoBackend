@@ -27,6 +27,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -197,6 +198,6 @@ class FlightResourceTest {
                 .extract()
                 .body().jsonPath().getList("", FlightDTO.class);
 
-        assertThat(flightDTOS, containsInAnyOrder(flightDTO2));
+        assertEquals(flightDTOS.get(0), flightDTO2);
     }
 }
