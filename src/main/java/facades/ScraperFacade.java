@@ -45,6 +45,7 @@ public class ScraperFacade {
 
         ExecutorService executor = Executors.newCachedThreadPool();
         for (String url : urls) {
+            //The lambda notation makes the method an implicit callable
             Future<String> future = executor.submit(() -> getApiData(url));
             queue.add(future);
         }
