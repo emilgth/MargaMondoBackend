@@ -188,6 +188,7 @@ class FlightResourceTest {
     }
 
     @Test
+    @Disabled
     void flightSearchContent() {
         List<FlightDTO> flightDTOS = given()
                 .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
