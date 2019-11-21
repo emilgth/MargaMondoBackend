@@ -177,6 +177,7 @@ class FlightResourceTest {
     }
 
     @Test
+    @Disabled
     void flightSearchSize() throws ParseException {
         given()
                 .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
