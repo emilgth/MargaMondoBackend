@@ -177,7 +177,7 @@ class FlightResourceTest {
     }
 
     @Test
-    @Disabled
+    //@Disabled
     void flightSearchSize() throws ParseException {
         given()
                 .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
@@ -189,7 +189,7 @@ class FlightResourceTest {
     }
 
     @Test
-    @Disabled
+    //@Disabled
     void flightSearchContent() {
         List<FlightDTO> flightDTOS = given()
                 .body("{ \"destination\": \"Paris\", \"departure\": \"Copenhagen\", \"dateTime\": \"2019-12-02\" }")
@@ -200,6 +200,6 @@ class FlightResourceTest {
                 .extract()
                 .body().jsonPath().getList("", FlightDTO.class);
 
-        assertEquals(flightDTOS.get(0), flightDTO2);
+        assertEquals(flightDTO2, flightDTOS.get(0));
     }
 }
