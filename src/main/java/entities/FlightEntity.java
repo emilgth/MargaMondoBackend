@@ -42,6 +42,8 @@ public class FlightEntity implements Serializable {
     private AirlineEntity airline;
 //    private String flightNumber;
 //    private String aircraftType;
+    @Column(name = "flight_class")
+    private String flightClass;
 
 
     public FlightEntity() {
@@ -128,4 +130,11 @@ public class FlightEntity implements Serializable {
         this.id = id;
     }
 
+    public String getFlightClass() {
+        return flightClass;
+    }
+
+    public void setFlightClass(String flightClass) {
+        this.flightClass = flightClass;
+    }
 }

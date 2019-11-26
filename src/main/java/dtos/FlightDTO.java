@@ -18,6 +18,7 @@ public class FlightDTO {
     private String flightNumber;
     private String aircraftType;
     private double price;
+    private String flightClass;
 
     public FlightDTO() {
     }
@@ -35,6 +36,7 @@ public class FlightDTO {
 //        this.flightNumber = flightEntity.getFlightNumber();
 //        this.aircraftType = flightEntity.getAircraftType();
         this.price = flightEntity.getPrice();
+        this.flightClass = flightEntity.getFlightClass();
     }
 
     @Override
@@ -173,5 +175,13 @@ public class FlightDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getFlightClass() {
+        return flightClass;
+    }
+
+    public void setFlightClass(String flightClass) {
+        this.flightClass = flightClass;
     }
 }
