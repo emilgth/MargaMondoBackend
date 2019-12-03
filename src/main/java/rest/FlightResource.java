@@ -65,4 +65,12 @@ public class FlightResource {
         Date date = flightSearchDTO.getDateTime();
         return GSON.toJson(FLIGHT_FACADE.flightSearch(dest, dep, date));
     }
+
+    @Path("booking/log")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String bookingLog(String data) {
+        return null;
+    }
 }

@@ -8,6 +8,8 @@
         <class>entities.FlightEntity</class>
         <class>entities.AirportEntity</class>
         <class>entities.AirlineEntity</class>
+        <class>entities.SearchLogEntity</class>
+        <class>entities.BookingLogEntity</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->

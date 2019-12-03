@@ -1,11 +1,7 @@
 package entities;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-import org.eclipse.persistence.tools.schemaframework.ForeignKeyConstraint;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 
