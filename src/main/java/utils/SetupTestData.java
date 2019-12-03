@@ -22,25 +22,35 @@ public class SetupTestData {
     private static void persistFlightEntities(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        AirportEntity airportEntity = new AirportEntity("Copenhagen", "CPH");
+        AirportEntity airportEntity0 = new AirportEntity("Copenhagen", "CPH");
         AirportEntity airportEntity1 = new AirportEntity("Paris", "CDG");
-        AirlineEntity airlineEntity = new AirlineEntity("SAS");
+        AirlineEntity airlineEntity0 = new AirlineEntity("SAS");
+        AirlineEntity airlineEntity1 = new AirlineEntity("Air France");
 
-        FlightEntity flightEntity = new FlightEntity();
-//        flightEntity.setAircraftType("Airbus 230");
-        flightEntity.setAirline(airlineEntity);
-        flightEntity.setArrivalLocation(airportEntity1);
-        flightEntity.setDepartureLocation(airportEntity);
-        long deptime = 1575154800000L;
-        flightEntity.setDepartureTime(new Date(deptime));
-        long arrTime = 1575154800000L + 10000000L;
-//        flightEntity.setArrivalTime(new Date(arrTime));
-//        flightEntity.setFlightDuration(flightEntity.getArrivalTime().getTime() - flightEntity.getDepartureTime().getTime());
-//        flightEntity.setFlightNumber("AB1234");
-        flightEntity.setPrice(1500);
+        FlightEntity flightEntity0 = new FlightEntity();
+        FlightEntity flightEntity1 = new FlightEntity();
+
+        flightEntity0.setAirline(airlineEntity0);
+        flightEntity1.setAirline(airlineEntity1);
+
+        flightEntity0.setDepartureLocation(airportEntity0);
+        flightEntity1.setDepartureLocation(airportEntity1);
+
+        flightEntity0.setArrivalLocation(airportEntity1);
+        flightEntity1.setArrivalLocation(airportEntity0);
+
+        long depTime0 = 1575154800000L;
+        long depTime1 = 1575759600000L;
+        flightEntity0.setDepartureTime(new Date(depTime0));
+        flightEntity1.setDepartureTime(new Date(depTime1));
+
+        flightEntity0.setPrice(150);
+        flightEntity1.setPrice(175);
+
         try {
             em.getTransaction().begin();
-            em.persist(flightEntity);
+            em.persist(flightEntity0);
+            em.persist(flightEntity1);
             em.getTransaction().commit();
         }finally {
             em.close();
@@ -105,7 +115,7 @@ public class SetupTestData {
 
         Date date_01_12 = new GregorianCalendar(2019, Calendar.DECEMBER, 1).getTime();
         Date date_05_12 = new GregorianCalendar(2019, Calendar.DECEMBER, 5).getTime();
-        BookingLogEntity bookingLogEntity0 = new BookingLogEntity("CPH", "CDG", date_01_12.getTime(), 450.0, 2, 2, 7200000L);
+        BookingLogEntity bookingLogEntity0 = new BookingLogEntity("CPH", "CDG", date_01_12.getTime(), null, 450.0, 2, 2, 7200000L);
         BookingLogEntity bookingLogEntity1 = new BookingLogEntity("CPH", "CDG", date_01_12.getTime(), date_05_12.getTime(), 140.0, 1, null, 8100000L);
 
         try {

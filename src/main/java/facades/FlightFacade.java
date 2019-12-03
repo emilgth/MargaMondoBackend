@@ -1,7 +1,11 @@
 package facades;
 
+import dtos.BookingLogDTO;
 import dtos.FlightDTO;
+import dtos.SearchLogDTO;
+import entities.BookingLogEntity;
 import entities.FlightEntity;
+import entities.SearchLogEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,6 +59,24 @@ public class FlightFacade implements IFlightFacade {
                     .getResultList();
             flightEntities.forEach(f -> flightDTOS.add(new FlightDTO(f)));
             return flightDTOS;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void searchLogger(SearchLogEntity data) {
+
+    }
+
+    @Override
+    public void bookingLogger(BookingLogEntity data) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(data);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }

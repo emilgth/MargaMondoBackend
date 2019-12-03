@@ -1,7 +1,10 @@
 package entities;
 
+import dtos.BookingLogDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,15 +36,33 @@ public class BookingLogEntity implements Serializable {
     public BookingLogEntity() {
     }
 
-    public BookingLogEntity(String departureAirport, String arrivalAirport, Long departureDate, Double price, Integer adults, Integer children, Long flightDuration) {
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
-        this.departureDate = departureDate;
-        this.returnDate = null;
-        this.price = price;
-        this.adults = adults;
-        this.children = children;
-        this.flightDuration = flightDuration;
+    public BookingLogEntity(List<BookingLogDTO> data) {
+        this.departureAirport = data.get(0).getDepartureAirportCode();
+        this.arrivalAirport = data.get(0).getArrivalAirportCode();
+        this.departureDate = data.get(0).getDepartureTimeMS();
+        this.returnDate = arraySizeCheck(data);
+        this.price = calcPrice(data);
+        this.adults = data.get(0).getNumberOfAdults();
+        this.children = data.get(0).getNumberOfChildren();
+        this.flightDuration = data.get(0).getFlightDurationMS();
+    }
+
+    private static Long arraySizeCheck(List<BookingLogDTO> data) {
+        if (data.size() > 1) {
+            return data.get(1).getDepartureTimeMS();
+        } else {
+            return null;
+        }
+    }
+
+    private static double calcPrice(List<BookingLogDTO> data) {
+        if (data.size() > 1) {
+            double outTotal = data.get(0).getPrice() * data.get(0).getNumberOfAdults() + (data.get(0).getPrice() / 2) * data.get(0).getNumberOfChildren();
+            double returnTotal = data.get(1).getPrice() * data.get(1).getNumberOfAdults() + (data.get(1).getPrice() / 2) * data.get(1).getNumberOfChildren();
+            return outTotal + returnTotal;
+        } else {
+            return data.get(0).getPrice() * data.get(0).getNumberOfAdults() + (data.get(0).getPrice() / 2) * data.get(0).getNumberOfChildren();
+        }
     }
 
     public BookingLogEntity(String departureAirport, String arrivalAirport, Long departureDate, Long returnDate, Double price, Integer adults, Integer children, Long flightDuration) {

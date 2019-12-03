@@ -4,8 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import dtos.BookingLogDTO;
 import dtos.FlightDTO;
 import dtos.FlightSearchDTO;
+import entities.BookingLogEntity;
+import entities.SearchLogEntity;
 import facades.FlightFacade;
 import facades.ScraperFacade;
 import utils.EMF_Creator;
@@ -13,6 +17,8 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -54,6 +60,13 @@ public class FlightResource {
         return GSON.toJson(data);
     }
 
+    @Path("log")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getLog() {
+        return null;
+    }
+
     @Path("search")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
@@ -66,11 +79,31 @@ public class FlightResource {
         return GSON.toJson(FLIGHT_FACADE.flightSearch(dest, dep, date));
     }
 
+    @Path("search/log/single")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void searchLogSingle(String data) {
+        SearchLogEntity searchLogEntity = GSON.fromJson(data, SearchLogEntity.class);
+
+    }
+
+    @Path("search/log/return")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void searchLogReturn(String data) {
+
+    }
+
     @Path("booking/log")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String bookingLog(String data) {
-        return null;
+        Type listType = new TypeToken<ArrayList<BookingLogDTO>>(){}.getType();
+        List<BookingLogDTO> tripData = GSON.fromJson(data, listType);
+        FLIGHT_FACADE.bookingLogger(new BookingLogEntity(tripData));
+        return "Booking logged " + new Date(System.currentTimeMillis()).toString();
     }
 }
