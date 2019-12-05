@@ -106,4 +106,5 @@ public class FlightResource {
         FLIGHT_FACADE.bookingLogger(new BookingLogEntity(tripData));
         return "Booking logged " + new Date(System.currentTimeMillis()).toString();
     }
+    
 }
