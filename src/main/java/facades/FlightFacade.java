@@ -1,6 +1,6 @@
 package facades;
 
-import dtos.BookingLogDTO;
+import dtos.BookingDTO;
 import dtos.FlightDTO;
 import dtos.SearchLogDTO;
 import entities.BookingLogEntity;
@@ -66,7 +66,15 @@ public class FlightFacade implements IFlightFacade {
 
     @Override
     public void searchLogger(SearchLogEntity data) {
+        EntityManager em = emf.createEntityManager();
 
+        try {
+            em.getTransaction().begin();
+            em.persist(data);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -77,6 +85,34 @@ public class FlightFacade implements IFlightFacade {
             em.getTransaction().begin();
             em.persist(data);
             em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<SearchLogDTO> getAllSearchLogs() {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            List<SearchLogDTO> searchLogDTOS = new ArrayList<>();
+            List<SearchLogEntity> searchLogEntities = em.createNamedQuery("SearchLogEntity.getAllRows", SearchLogEntity.class).getResultList();
+            searchLogEntities.forEach(searchLogEntity -> searchLogDTOS.add(new SearchLogDTO(searchLogEntity)));
+            return searchLogDTOS;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<BookingDTO> getAllBookings() {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            List<BookingDTO> bookingDTOS = new ArrayList<>();
+            List<BookingLogEntity> bookingLogEntities = em.createNamedQuery("BookingLogEntity.getAllRows", BookingLogEntity.class).getResultList();
+            bookingLogEntities.forEach(bookingLogEntity -> bookingDTOS.add(new BookingDTO(bookingLogEntity)));
+            return bookingDTOS;
         } finally {
             em.close();
         }

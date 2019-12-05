@@ -5,9 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import dtos.BookingLogDTO;
-import dtos.FlightDTO;
-import dtos.FlightSearchDTO;
+import dtos.*;
 import entities.BookingLogEntity;
 import entities.SearchLogEntity;
 import facades.FlightFacade;
@@ -64,7 +62,16 @@ public class FlightResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getLog() {
-        return null;
+        List<BookingDTO> bookings = FLIGHT_FACADE.getAllBookings();
+        return GSON.toJson(bookings);
+    }
+
+    @Path("searchlog")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getSearchLog() {
+        List<SearchLogDTO> searchLogs = FLIGHT_FACADE.getAllSearchLogs();
+        return GSON.toJson(searchLogs);
     }
 
     @Path("search")
@@ -79,21 +86,14 @@ public class FlightResource {
         return GSON.toJson(FLIGHT_FACADE.flightSearch(dest, dep, date));
     }
 
-    @Path("search/log/single")
+    @Path("search/log")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public void searchLogSingle(String data) {
-        SearchLogEntity searchLogEntity = GSON.fromJson(data, SearchLogEntity.class);
-
-    }
-
-    @Path("search/log/return")
-    @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void searchLogReturn(String data) {
-
+    public String searchLog(String data) {
+        SearchLogDTO searchLogDTO = GSON.fromJson(data, SearchLogDTO.class);
+        FLIGHT_FACADE.searchLogger(new SearchLogEntity(searchLogDTO));
+        return "Booking logged" + new Date(System.currentTimeMillis()).toString();
     }
 
     @Path("booking/log")

@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(name = "BookingLogEntity.getAllRows", query = "SELECT Booking FROM BookingLogEntity Booking"),
+        @NamedQuery(name = "BookingLogEntity.deleteAllRows", query = "DELETE FROM BookingLogEntity ")
+})
 @Table(name = "booking_log")
 public class BookingLogEntity implements Serializable {
 
@@ -95,6 +99,14 @@ public class BookingLogEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, departureAirport, arrivalAirport, departureDate, returnDate, price, adults, children, flightDuration);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDepartureAirport() {

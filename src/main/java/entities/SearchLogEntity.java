@@ -1,10 +1,18 @@
 package entities;
 
+import dtos.SearchLogDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(name = "SearchLogEntity.getAllRows", query = "SELECT Log FROM SearchLogEntity Log"),
+        @NamedQuery(name = "SearchLogEntity.deleteAllRows", query = "DELETE FROM SearchLogEntity")
+})
 @Table(name = "search_log")
 public class SearchLogEntity implements Serializable {
 
@@ -25,11 +33,18 @@ public class SearchLogEntity implements Serializable {
     public SearchLogEntity() {
     }
 
+    public SearchLogEntity(SearchLogDTO data) {
+        this.departureAirport = data.getDeparture();
+        this.arrivalAirport = data.getDestination();
+        this.departureDate = dateParser(data.getDateTime());
+        this.returnDate = dateParser(data.getReturnDate());
+    }
+
     public SearchLogEntity(String departureAirport, String arrivalAirport, Long departureDate) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
-        this.returnDate = null;
+        this.returnDate = 0L;
     }
 
     public SearchLogEntity(String departureAirport, String arrivalAirport, Long departureDate, Long returnDate) {
@@ -37,6 +52,20 @@ public class SearchLogEntity implements Serializable {
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
+    }
+
+    private static long dateParser(String input) {
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        long result = 0L;
+        if (input == null) {
+            return result;
+        }
+        try {
+            result = parser.parse(input).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -56,35 +85,43 @@ public class SearchLogEntity implements Serializable {
         return Objects.hash(id, departureAirport, arrivalAirport, departureDate, returnDate);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getDepartureAirport() {
         return departureAirport;
     }
 
-    public void setDepartureAirport(String departureLocation) {
-        this.departureAirport = departureLocation;
+    public void setDepartureAirport(String departureAirport) {
+        this.departureAirport = departureAirport;
     }
 
     public String getArrivalAirport() {
         return arrivalAirport;
     }
 
-    public void setArrivalAirport(String arrivalLocation) {
-        this.arrivalAirport = arrivalLocation;
+    public void setArrivalAirport(String arrivalAirport) {
+        this.arrivalAirport = arrivalAirport;
     }
 
     public Long getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Long departureTime) {
-        this.departureDate = departureTime;
+    public void setDepartureDate(Long departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public Long getArrivalTime() {
+    public Long getReturnDate() {
         return returnDate;
     }
 
-    public void setArrivalTime(Long arrivalTime) {
-        this.returnDate = arrivalTime;
+    public void setReturnDate(Long returnDate) {
+        this.returnDate = returnDate;
     }
 }

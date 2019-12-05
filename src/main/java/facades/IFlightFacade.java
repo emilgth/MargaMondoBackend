@@ -1,6 +1,6 @@
 package facades;
 
-import dtos.BookingLogDTO;
+import dtos.BookingDTO;
 import dtos.FlightDTO;
 import dtos.SearchLogDTO;
 import entities.BookingLogEntity;
@@ -19,4 +19,7 @@ public interface IFlightFacade {
 
     void bookingLogger(BookingLogEntity data);
 
+    List<SearchLogDTO> getAllSearchLogs();
+
+    List<BookingDTO> getAllBookings();
 }
