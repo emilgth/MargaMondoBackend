@@ -35,8 +35,8 @@ public class ScraperFacade {
     private static void getUrls() {
         urls = new ArrayList<>();
         urls.add("https://emilgth.dk/margamondo/api/flights/all");
-        urls.add("https://www.jjugroup.ga/SysEksBackend/api/flight/all");
-        urls.add("http://lamseben.dk/rushflight/api/flights/all");
+//        urls.add("https://www.jjugroup.ga/SysEksBackend/api/flight/all");
+//        urls.add("http://lamseben.dk/rushflight/api/flights/all");
     }
 
     public List<String> getAllApiData() throws ExecutionException, InterruptedException {
